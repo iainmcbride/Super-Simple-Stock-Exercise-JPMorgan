@@ -1,10 +1,13 @@
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
 import java.util.Random;
 
 
 public class starterClass {
-	
-	
+
+
 
 	public static void main(String[] args) 
 	{
@@ -19,7 +22,7 @@ public class starterClass {
 		allStocks.addStock("ALE", Stock.STOCKTYPE.COMMON, 23, 0.0, 60);
 		allStocks.addStock("GIN", Stock.STOCKTYPE.PREFERRED, 8, 0.02, 100);
 		allStocks.addStock("JOE", Stock.STOCKTYPE.COMMON, 13, 0.0, 250);
-		
+
 
 
 		/*
@@ -49,6 +52,7 @@ public class starterClass {
 			int timeDifference = random.nextInt(1000*60*30);
 			//long timeDifference = random.nextLong() / (1000*60*30);
 
+			
 			if (k == 0)
 			{
 				stockTraded.tradeThisStock(numberSold, price, Stock.TRADETYPE.BUY, new Date(new Date().getTime() - timeDifference));
@@ -60,78 +64,106 @@ public class starterClass {
 		}
 
 
-		/*
-		 * Output the details of the stocks and the information requested in the specification
-		 */
-		System.out.println("****All stocks\n");
+		PrintWriter out = null;
 
-		System.out.println(allStocks);
-		System.out.println();
-
-		
-		/*
-		 * Output the details of the random transactions created by stock
-		 */
-		System.out.println("****Transactions by Stock \n");
-
-
-		for (int i = 0; i < allStocks.getStocksCount(); i++)
-		{
-			Stock stock = allStocks.getStock(i);
-
-			System.out.println(stock.getStockName());
-			//System.out.println(stock.printTrades());
-
-			if (stock.countTrades() >0)
-			{
-
-				System.out.format("%8s : %11s : %8s : %8s \n", "Quantity", "Stock Price", "BUY / SELL", "Timestamp");
-				System.out.println(stock.printTrades());
-			}
-			else
-			{
-				System.out.format("No trades involving this stock. \n");
-				System.out.println();
-
-			}
-
-
-		}
-
-
-		/*
-		 * Output the stock performance data including Stock Price, PE Ratio, Dividend Yield and a count of the number of trades in the last 15 minutes
-		 */
-		System.out.println();
-
-		System.out.println("****Stock performance data \n");
-
-		System.out.format("%12s : %11s : %8s : %14s : %26s \n", "Stock Symbol", "Stock Price", "PE Ratio", "Dividend Yield", "Trades in the last 15 mins");
-		for (int i = 0; i < allStocks.getStocksCount(); i++)
+		try
 		{
 
-			Stock stock = allStocks.getStock(i);
-			stock.getStockPrice();
-
-			if (stock.countTradesintheLastFifteenMinutes() >0)
+			try
 			{
-				System.out.format("%-12s : %-11.2f : %-8.3f : %-14.3f : %-26s \n", stock.getStockName(), stock.getStockPrice(), stock.getPriceEarningRatio(), stock.getDividendYield(), stock.countTradesintheLastFifteenMinutes());
-			}
-			else
-			{
-				System.out.format("%-12s : No trades in the last 15 minutes. \n", stock.getStockName());
-			}
+				out = new PrintWriter("Stock and Trade Details");
 
+
+				/*
+				 * Output the details of the stocks and the information requested in the specification
+				 */
+				out.println("****All stocks\n");
+
+				out.println(allStocks);
+				out.println();
+
+
+				/*
+				 * Output the details of the random transactions created by stock
+				 */
+				out.println("****Transactions by Stock \n");
+
+
+				for (int i = 0; i < allStocks.getStocksCount(); i++)
+				{
+					Stock stock = allStocks.getStock(i);
+
+					out.println(stock.getStockName());
+					//System.out.println(stock.printTrades());
+
+					if (stock.countTrades() >0)
+					{
+
+						out.format("%8s : %11s : %8s : %8s \n", "Quantity", "Stock Price", "BUY / SELL", "Timestamp");
+						out.println(stock.printTrades());
+					}
+					else
+					{
+						out.format("No trades involving this stock. \n");
+						out.println();
+
+					}
+
+
+				}
+
+
+				/*
+				 * Output the stock performance data including Stock Price, PE Ratio, Dividend Yield and a count of the number of trades in the last 15 minutes
+				 */
+				out.println();
+
+				out.println("****Stock performance data \n");
+
+				out.format("%12s : %11s : %8s : %14s : %26s \n", "Stock Symbol", "Stock Price", "PE Ratio", "Dividend Yield", "Trades in the last 15 mins");
+				for (int i = 0; i < allStocks.getStocksCount(); i++)
+				{
+
+					Stock stock = allStocks.getStock(i);
+					stock.getStockPrice();
+
+					if (stock.countTradesintheLastFifteenMinutes() >0)
+					{
+						out.format("%-12s : %-11.2f : %-8.3f : %-14.3f : %-26s \n", stock.getStockName(), stock.getStockPrice(), stock.getPriceEarningRatio(), stock.getDividendYield(), stock.countTradesintheLastFifteenMinutes());
+					}
+					else
+					{
+						out.format("%-12s : No trades in the last 15 minutes. \n", stock.getStockName());
+					}
+
+				}
+
+				/*
+				 * Output the GBCE All Shares Index calculated according to the specification
+				 */
+				out.println();
+				out.format("GBCE All Share Index : %.2f", allStocks.getGBCEAllShareIndex());
+
+				out.close();
+
+			}
+			finally
+			{
+				// If the printwriter has been initialised then close the printwriter
+				if (out != null) out.close();
+			}
 		}
-
-		/*
-		 * Output the GBCE All Shares Index calculated according to the specification
-		 */
-		System.out.println();
-		System.out.format("GBCE All Share Index : %.2f", allStocks.getGBCEAllShareIndex());
+		catch (IOException error)
+		{
+			// handle the exception if there is a problem writing to the file
+		}
 
 
 
 	}
+
+
+
+
 
 }
