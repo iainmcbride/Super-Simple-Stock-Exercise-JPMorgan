@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.Random;
 
 
-public class starterClass {
+public class StarterClass {
 
 
 
@@ -71,7 +71,7 @@ public class starterClass {
 
 			try
 			{
-				out = new PrintWriter("Stock and Trade Details");
+				out = new PrintWriter("Stock and Trade Details.txt");
 
 
 				/*
