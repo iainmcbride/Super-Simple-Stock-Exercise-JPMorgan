@@ -1,16 +1,20 @@
+package models;
+
 import java.util.ArrayList;
 
 public class Stocks 
 {
 	/**
-	 * A collection of each of the Stock objects contained in the list of stocks
+	 * A collection of the Stock objects contained in this Stocks object
 	 */
 	private ArrayList<Stock> stocks;
 
+	/**
+	 * A collection class of Stock objects.
+	 */
 	public Stocks()
 	{
 		stocks = new ArrayList<Stock>();
-
 	}
 
 	/**
@@ -27,7 +31,11 @@ public class Stocks
 		stocks.add(new Stock(stockSymbol, stockType, lastDividend, fixedDividend, parValue));
 	}
 
-
+	/**
+	 * Return the GBCE All Share index. This is calculated as the geometric mean of of prices for all of the stocks.
+	 * 
+	 * @return The geometric mean of the stock price taken over all stocks that have been traded within the last 15 minutes
+	 */
 	public double getGBCEAllShareIndex()
 	{
 		double productofStockPrices = 1.0;
@@ -39,16 +47,21 @@ public class Stocks
 		}
 		else
 		{
+			// Check each stock in the stocks collection
 			for (Stock stock : stocks)
 			{
+				// This stock should only be considered part of the calculation if there
+				// have been one or more trades involving this stock in the last 15 minutes
 				if (stock.countTradesintheLastFifteenMinutes() > 0)
 				{
-					productofStockPrices *= stock.getStockPrice();
+					productofStockPrices = stock.getStockPrice() * productofStockPrices;
 					stocksTraded++;
 				}
 
 			}
 
+			// This calculation is the geometric mean of the price of all of the stocks
+			// which have been traded within the last 15 minutes
 			return Math.pow(productofStockPrices, (1.0 / stocksTraded));
 
 		}
