@@ -108,8 +108,8 @@ public class StarterClass {
 
 					out.println(stock.getStockName());
 					
-					// if there have been trades involving this stock then output the details of those trades
-					// otherwise indicate that no trades have occured
+					// if there have been trades involving this stock in the last 15 minutes then output 
+					// the details of those trades, otherwise indicate that no trades have occurred
 					if (stock.countTrades() >0)
 					{
 
