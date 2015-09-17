@@ -6,6 +6,8 @@ import java.util.Date;
 
 public class Stock 
 {
+	
+	
 	public enum STOCKTYPE {COMMON, PREFERRED}
 	
 
