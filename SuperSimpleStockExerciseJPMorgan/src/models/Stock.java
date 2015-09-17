@@ -54,7 +54,7 @@ public class Stock
 
 
 	/**
-	 * Create a new stock object
+	 * Create a new stock object.
 	 * 
 	 * @param stockSymbol	The stock symbol to be used for this stock
 	 * @param stockType		The type for this stock - either COMMON or PREFERRED (other options may be added by extending the STOCKTYPE enum)
@@ -195,7 +195,7 @@ public class Stock
 
 
 	/**
-	 * Calculate the stock price for this stock based on trades that happened in the last 15 minutes
+	 * Calculate the stock price for this stock based on trades that happened in the last 15 minutes.
 	 * 
 	 * @return 		The sum of all trade prices times quantities taken over all trades divided by the sum of all quantities taken over all trades 
 	 */
@@ -237,7 +237,7 @@ public class Stock
 	}
 
 	/**
-	 * Generate a string containing the details of each of the transactions involving this stock
+	 * Generate a string containing the details of each of the transactions involving this stock.
 	 * 
 	 * @return A String containing all of the trades involving this stock
 	 */
@@ -296,7 +296,7 @@ public class Stock
 	}
 	
 	/**
-	 * Return the Par Value of this stock
+	 * Return the Par Value of this stock.
 	 * 
 	 * @return parValue The Par Value payable on this stock
 	 */
